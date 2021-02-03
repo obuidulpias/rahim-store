@@ -7,6 +7,29 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
+    public function homeControl() {
+        $products = Product::all();
+        return view('home', ['products'=> $products]);
+    }
+    public function filterProduct(Request $request) {
+        //$products = Product::all();
+        $min = $request -> min_price;
+        $max = $request -> max_price;
+        
+        $products = Product::where(function($query) {
+            
+            if(isset($min) && isset($max)) {
+                
+                $query  ->where('price', '>=' , $min)
+                        ->where('price', '<=' , $max);
+            }
+        
+        
+        })->get();
+        return view('home', ['products'=> $products]);
+       
+    }
+    
     public function index() {
         return view('product.create-product');
     }

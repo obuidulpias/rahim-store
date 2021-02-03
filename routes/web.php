@@ -13,10 +13,12 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::get('/', function () {
-    //return view('welcome');
-    return view('home');
-});
+Route::get('/', [ProductController::class, 'homeControl']);
+//Route::get('/', function () {
+ //   //return view('welcome');
+//    return view('home');
+//});
+Route::post('/filter-product', [ProductController::class, 'filterProduct'])->name('filter-product');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('admin');
